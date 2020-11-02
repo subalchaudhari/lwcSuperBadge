@@ -8,6 +8,7 @@
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
+**/lwc/*.json
 
 # LWC Jest coverage reports
 coverage/
@@ -36,3 +37,13 @@ Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
+
+#scripts
+scripts
+.eslintignore
+.vscode
+config
+.pre*
+package.json
+sfdx-project.json
+**/aura/*.json
