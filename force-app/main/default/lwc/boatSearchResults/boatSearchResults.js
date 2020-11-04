@@ -73,11 +73,27 @@ export default class BoatSearchResults extends LightningElement {
   // clear lightning-datatable draft values
   handleSave(event) {
     // notify loading
+    this.notifyLoading(true);
     const updatedFields = event.detail.draftValues;
     // Update the records via Apex
     updateBoatList({data: updatedFields})
-    .then(() => {})
-    .catch(error => {})
+    .then(() => {
+      const showSuccessMsg = new ShowToastEvent({
+        title: SUCCESS_TITLE,
+        message: MESSAGE_SHIP_IT,
+        variant: SUCCESS_VARIANT
+      });
+      this.dispatchEvent(showSuccessMsg);
+    })
+    .catch(error => {
+      const CONST_ERROR = error;
+      const showErrorMsg = new ShowToastEvent({
+        title: ERROR_TITLE,
+        message: CONST_ERROR,
+        variant: ERROR_VARIANT
+      });
+      this.dispatchEvent(showSuccessMsg);
+    })
     .finally(() => {});
   }
   // Check the current value of isLoading before dispatching the doneloading or loading custom event

@@ -5,7 +5,7 @@ export default class BoatSearchForm extends LightningElement {
     console.log('errorcallback -parent' + error );
     console.log(stack);
 }
-  @track  
+   
   selectedBoatTypeId = '';
     
     // Private
@@ -38,7 +38,7 @@ export default class BoatSearchForm extends LightningElement {
       event.preventDefault();
       this.selectedBoatTypeId = event.detail.value;
       const searchEvent = new CustomEvent('search',{
-        detail: {boatTypeId: this.selectedBoatTypeId }
+        detail: { boatTypeId : event.detail.value }
       
       });
       this.dispatchEvent(searchEvent);
