@@ -94,6 +94,7 @@ public with sharing class BoatDataService {
     @AuraEnabled(Cacheable=true)
     public static String getBoatsByLocation(Decimal latitude, Decimal longitude, String boatTypeId) {
         // Without an explicit boatTypeId, the full list is desired
+        System.debug('In getBoatsByLocation');
         String query = 'SELECT Name, Geolocation__Latitude__s, Geolocation__Longitude__s FROM Boat__c ';
         if (String.isNotBlank(boatTypeId)) {
             query += 'WHERE BoatType__c = :boatTypeId ';

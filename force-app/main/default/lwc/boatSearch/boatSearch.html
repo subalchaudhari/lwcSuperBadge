@@ -17,12 +17,9 @@
             <!-- Spinner goes here -->
             <template if:true={isLoading}>
                 <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-            </template>
-            <template if:false={isLoading}>
+            </template>            
                <!-- boatSearchResults goes here -->
                 <c-boat-search-results  onloading={handleLoading} ondoneloading={handleDoneLoading}></c-boat-search-results>
-            </template>
-            
             <!-- onloading={handleLoading} ondoneloading={handleDoneLoading} -->
           </lightning-layout-item>
     </lightning-layout>

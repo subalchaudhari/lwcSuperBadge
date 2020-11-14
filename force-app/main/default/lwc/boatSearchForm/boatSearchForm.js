@@ -1,15 +1,10 @@
 import { LightningElement, wire, track } from 'lwc';
 import getBoatTypes from '@salesforce/apex/BoatDataService.getBoatTypes';
 export default class BoatSearchForm extends LightningElement {
-  errorCallback(error, stack){
-    console.log('errorcallback -parent' + error );
-    console.log(stack);
-}
-   
+  @track
   selectedBoatTypeId = '';
     
     // Private
-    @track
     error = undefined;
     
     // Needs explicit track due to nested data
@@ -33,10 +28,12 @@ export default class BoatSearchForm extends LightningElement {
     // Fires event that the search option has changed.
     // passes boatTypeId (value of this.selectedBoatTypeId) in the detail
     handleSearchOptionChange(event) {
+      
       // Create the const searchEvent
       // searchEvent must be the new custom event search
-      event.preventDefault();
+      //event.preventDefault();
       this.selectedBoatTypeId = event.detail.value;
+      console.log('selected boat Type: '+ this.selectedBoatTypeId);
       const searchEvent = new CustomEvent('search',{
         detail: { boatTypeId : event.detail.value }
       

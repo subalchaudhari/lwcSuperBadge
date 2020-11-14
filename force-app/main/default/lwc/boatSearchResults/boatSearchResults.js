@@ -1,8 +1,10 @@
 import { LightningElement,api, wire ,track} from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import {publish,MessageContext} from 'lightning/messageService';
 import{getRecord} from 'lightning/uiRecordApi';
 import getBoats from '@salesforce/apex/BoatDataService.getBoats';
 import BOATMC from '@salesforce/messageChannel/BoatMessageChannel__c';
+import { refreshApex } from '@salesforce/apex';
 
 const SUCCESS_TITLE = 'Success';
 const MESSAGE_SHIP_IT = 'Ship it!';
@@ -49,7 +51,10 @@ export default class BoatSearchResults extends LightningElement {
   
   // this public function must refresh the boats asynchronously
   // uses notifyLoading
-  refresh() { }
+  refresh() { 
+    this.notifyLoading(true);
+    return refreshApex(this.boats);
+  }
   
   // this function must update selectedBoatId and call sendMessageService
   updateSelectedTile(event) { 
@@ -84,6 +89,7 @@ export default class BoatSearchResults extends LightningElement {
         variant: SUCCESS_VARIANT
       });
       this.dispatchEvent(showSuccessMsg);
+      this.refresh();
     })
     .catch(error => {
       const CONST_ERROR = error;
