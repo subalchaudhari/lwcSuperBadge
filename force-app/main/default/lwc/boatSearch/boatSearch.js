@@ -1,7 +1,7 @@
-import { LightningElement,api } from 'lwc';
+import { LightningElement,api,track } from 'lwc';
 import { NavigationMixin  } from 'lightning/navigation';
 
-export default class BoatSearch extends LightningElement {
+export default class BoatSearch extends NavigationMixin(LightningElement) {
     @api isLoading = false;
     selectedboattype ='';
 
@@ -25,9 +25,9 @@ export default class BoatSearch extends LightningElement {
 
     handleSearch(event){
         this.selectedboattype = event.detail.boatTypeId;
-        console.log('after event: selected boat Type: '+ this.selectedboattype );
+        alert('after event: selected boat Type: '+ this.selectedboattype );
         //alert(this.selectedboattype );
         //this.selectedboattype = event.detail
-        this.template.querySelector('c-boat-search-results').searchBoats(event.detail.boatTypeId);
+        this.template.querySelector('c-boat-search-results').searchBoats(this.selectedboattype);
     }
 }
