@@ -1,4 +1,5 @@
 //import fivestar static resource, call it fivestar
+import { LightningElement,api } from 'lwc';
 import fivestar from '@salesforce/resourceUrl/fivestar';
 import {loadStyle,loadScript} from 'lightning/platformResourceLoader';
 
@@ -9,7 +10,9 @@ const EDITABLE_CLASS = 'c-rating';
 const READ_ONLY_CLASS = 'readonly c-rating';
 export default class FiveStarRating extends LightningElement {
   //initialize public readOnly and value properties
+  @api
   readOnly;
+  @api
   value;
 
   editedValue;
@@ -18,7 +21,7 @@ export default class FiveStarRating extends LightningElement {
 
   //getter function that returns the correct class depending on if it is readonly
   starClass() {
-    return (this.readOnly ? READ_ONLY_CLASS : READ_ONLY_CLASS);
+    return (this.readOnly ? READ_ONLY_CLASS : EDITABLE_CLASS);
   }
 
   // Render callback to load the script once the component renders.

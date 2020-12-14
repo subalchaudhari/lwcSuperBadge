@@ -6,8 +6,8 @@
                 <div slot="actions">
                     <lightning-button label="New Boat" title="Create New Boat" onclick={createNewBoat} class="slds-m-left_x-small"></lightning-button>
                 </div>
-                <p class="slds-var-p-horizontal_small">
-                    <c-boat-search-form onsearch={handleSearch}></c-boat-search-form>
+                <p class="slds-var-p-horizontal_small slds-align--absolute-center">
+                    <c-boat-search-form selected-boat-type-id={selectedBoatTypeId} onsearch={searchBoats}></c-boat-search-form>
                 </p>
             </lightning-card>
         </lightning-layout-item>
@@ -16,7 +16,7 @@
         <lightning-layout-item size="12" class="slds-p-top_small slds-is-relative">
             <!-- Spinner goes here -->
             <template if:true={isLoading}>
-                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                <lightning-spinner alternative-text="Loading" variant="brand"></lightning-spinner>
             </template>            
                <!-- boatSearchResults goes here -->
                 <c-boat-search-results  onloading={handleLoading} ondoneloading={handleDoneLoading}></c-boat-search-results>

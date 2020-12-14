@@ -17,7 +17,7 @@ selectedBoatId;
   get tileClass() {
     const TILE_WRAPPER_SELECTED_CLASS = 'tile-wrapper selected'
     const TILE_WRAPPER_UNSELECTED_CLASS = 'tile-wrapper'
-      if(this.selectedBoatId == this.boat.Id){
+      if(this.boat.Id == this.selectedBoatId){
           return TILE_WRAPPER_SELECTED_CLASS;
       }else{
           return TILE_WRAPPER_UNSELECTED_CLASS;
@@ -25,7 +25,7 @@ selectedBoatId;
    }
   
   // Fires event with the Id of the boat that has been selected.
-  selectBoat() { 
+  selectBoat(event) { 
       this.selectedBoatId = this.boat.Id;
       const boatselectEvent = new CustomEvent('boatselect',{
         detail:{boatId:this.selectedBoatId}

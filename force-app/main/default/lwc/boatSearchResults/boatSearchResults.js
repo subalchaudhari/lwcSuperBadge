@@ -1,8 +1,8 @@
 import { LightningElement,api, wire ,track} from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import {publish,MessageContext} from 'lightning/messageService';
-import{getRecord} from 'lightning/uiRecordApi';
 import getBoats from '@salesforce/apex/BoatDataService.getBoats';
+import updateBoatList from '@salesforce/apex/BoatDataService.updateBoatList';
 import BOATMC from '@salesforce/messageChannel/BoatMessageChannel__c';
 import { refreshApex } from '@salesforce/apex';
 
@@ -28,6 +28,8 @@ export default class BoatSearchResults extends LightningElement {
   boats;
   @track
   isLoading = false;
+  error = undefined;
+  @track draftValues = [];
   
   // wired message context
   @wire(MessageContext)
@@ -37,29 +39,38 @@ export default class BoatSearchResults extends LightningElement {
   wiredBoats(result) {
       if(result.data){
          this.boats = result.data; 
+      }else{
+        this.error = result.error;
       }
+      this.isLoading = false;
+      this.notifyLoading(this.isLoading);
    }
   
   // public function that updates the existing boatTypeId property
   // uses notifyLoading
   @api
   searchBoats(boatTypeId) {
-      this.boatTypeId = boatTypeId;
-      notifyLoading(true);
+    this.isLoading =true;
+    this.notifyLoading(this.isLoading);
+    this.boatTypeId = boatTypeId;      
       //alert('Selected Boat Type Id: '+boatTypeId);
    }
   
   // this public function must refresh the boats asynchronously
   // uses notifyLoading
-  refresh() { 
-    this.notifyLoading(true);
-    return refreshApex(this.boats);
+  @api
+  async refresh() { 
+    this.isLoading = true;
+    this.notifyLoading(this.isLoading);
+    await refreshApex(this.boats);
+    this.isLoading = false;
+    this.notifyLoading(this.isLoading); 
   }
   
   // this function must update selectedBoatId and call sendMessageService
   updateSelectedTile(event) { 
-    this.selectedBoatId = event.detail.boatId;
-    sendMessageService(this.selectedBoatId);
+    this.selectedBoatId = event.detail.boatId;    
+    this.sendMessageService(this.selectedBoatId);
   }
   
   // Publishes the selected boat Id on the BoatMC.
@@ -89,7 +100,8 @@ export default class BoatSearchResults extends LightningElement {
         variant: SUCCESS_VARIANT
       });
       this.dispatchEvent(showSuccessMsg);
-      this.refresh();
+      this.draftValues = [];
+      return this.refresh();
     })
     .catch(error => {
       const CONST_ERROR = error;
@@ -98,20 +110,25 @@ export default class BoatSearchResults extends LightningElement {
         message: CONST_ERROR,
         variant: ERROR_VARIANT
       });
-      this.dispatchEvent(showSuccessMsg);
+      this.dispatchEvent(showErrorMsg);
+      this.notifyLoading(false);
     })
-    .finally(() => {});
+    .finally(() => {
+      this.draftValues = [] ;
+    });
   }
   // Check the current value of isLoading before dispatching the doneloading or loading custom event
   notifyLoading(isLoading) { 
       if(isLoading){
-          this.dispatchEvent('loading',{
+         /* this.dispatchEvent('loading',{
               detail : isLoading
-          });
+          }); */
+          this.dispatchEvent(new CustomEvent('loading'));
       }else{
-        this.dispatchEvent('doneloading',{
+        /*this.dispatchEvent('doneloading',{
             detail : isLoading
-        });
+        }); */
+        this.dispatchEvent(new CustomEvent('doneloading'));
       }
   }
 }
