@@ -1,0 +1,20 @@
+Main:
+https://quip.com/mZraAMVckzta
+
+https://quip.com/XStaABDU5Fjb
+
+Playground:
+https://developer.salesforce.com/docs/component-library/tools/playground/kcxrbMGla/10/edit
+
+DevHub:
+subalchaudhari@devhub.com
+
+
+Divya Alavarthi (to All - Entire Audience):
+11:04 PM: Here is the links to the recordings:
+1. Lightning Web Components - Deep dive - webinar1 - Getting Started with LWC - http://salesforce.vidyard.com/watch/VKCeetQZGbJjkTd3yFihhD?
+2. Lightning Web Components - Deep Dive - webinar2-Working with Salesforce Data
+http://salesforce.vidyard.com/watch/cmLPpBiQSPA9pNDh43pJEF?
+
+Please join this Partner community Chatter Group https://sfdc.co/buayW6
+, where we will post all the decks and recordings in this series. Thank you.
